@@ -32,9 +32,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-// shofidiyamubarak_db_user
-// C57SfwHKHluOExaO
-// mongodb+srv://shofidiyamubarak_db_user:C57SfwHKHluOExaO@cluster0.9gw2evg.mongodb.net/
-
-// cors: cross origin resources sharing
