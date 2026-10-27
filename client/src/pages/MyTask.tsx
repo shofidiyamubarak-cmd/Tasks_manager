@@ -1,25 +1,18 @@
-import { Link } from "react-router-dom";
-import { FaPlus } from "react-icons/fa6";
+import { HiOutlineTrash } from "react-icons/hi2";
 import { FaRegEdit } from "react-icons/fa";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Task } from "../types";
-import { deleteTask, getErrorMessage, getTasks } from "../api";
-
-const MyTask = () => {
+import { deleteTask, getTasks } from "../api";
+const MyTasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [error, setError] = useState("");
-
-  // step 1: Load the tasks once, when the page first appears
+  // step 1: load the tasks once, when the page first appear
   useEffect(() => {
     const fetchTasks = async () => {
-      try {
-        const data = await getTasks();
-        setTasks(data);
-        console.log(data);
-      } catch (err) {
-        setError(getErrorMessage(err));
-      }
+      const data = await getTasks();
+      setTasks(data);
+      console.log(data);
     };
 
     fetchTasks();
@@ -32,28 +25,28 @@ const MyTask = () => {
     }
 
     await deleteTask(id);
-    // Keep every task EXCEPT the deleted one (no need to reload from the server)
+    // keep everytask except the deleted one(no need to reload from server or the server)
     setTasks(
       tasks.filter((task) => {
-        return task._id !== id;
+        return task._id! == id;
       }),
     );
   };
   return (
-    <main className="max-w-360 mx-auto px-5 md:px-42.5 py-8 md:py-13.25 flex flex-col items-start gap-7.25">
+    <main className="max-w-360 mx-auto  px-5 md:px-42.5 py-8 mf:py-13.25 flex flex-col items-start gap-7.25">
       <div className="flex flex-col md:flex-row items-start md:items-center w-full justify-between gap-4">
         <h1 className="font-medium text-3xl md:text-[50px] text-[#292929]">
           My Tasks
         </h1>
         <Link to="/new" className="flex items-center gap-2">
           <FaPlus className="text-lg md:text-[24px] font-medium text-[#974fd0]" />
-          <span className="text-lg md:text-[24px] font-medium text-[#974fD0]">
+          <span className="text-lg md:text-[24px] font-medium text-[#974fd0]">
             Add New Task
           </span>
         </Link>
       </div>
 
-      <div className="flex flex-col items-start gap-8 w-full">
+      <div className="flex flex-col items-start gap--8 w-full ">
         {tasks.length === 0 && <p>No tasks yet. Create one!</p>}
         {tasks.map((task) => {
           return (
@@ -63,7 +56,7 @@ const MyTask = () => {
             >
               <div className="pb-5 flex flex-col md:flex-row md:items-end justify-between w-full gap-4 border-b-[0.5px] border-b-[#b8b6b6]">
                 <p
-                  className={`font-normal text-xl md:text-[24px] ${task.tag === "Urgent" ? "text-[#f38383]" : "text-[#73C3A6]"} `}
+                  className={`font-normal ytext-xl md:text-[24px] ${task.tag === "Urgent" ? "text-[#f38383]" : "text-[#73c3a6]"}`}
                 >
                   {task.tag}
                 </p>
@@ -71,7 +64,7 @@ const MyTask = () => {
                 <div className="flex flex-wrap gap-3">
                   <Link
                     to={`/edit/${task._id}`}
-                    className="w-31.5 h-12.5 flex justify-center items-center gap-2.5 bg-[#974fd0] rounded-lg"
+                    className="w-31.5 h-12.5 flex items-center justify-center gap-2.5 bg-[#974fd0] rounded-lg"
                   >
                     <FaRegEdit className="text-[24px] font-medium text-[#faf9fb]" />
                     <span className="text-[24px] font-medium text-[#faf9fb]">
@@ -85,7 +78,7 @@ const MyTask = () => {
                     }}
                     className="border border-[#974fd0] w-37.75 h-12.5 flex justify-center items-center gap-2.5 rounded-lg"
                   >
-                    <FaRegTrashCan className="text-[24px] font-medium text-[#974fd0]" />
+                    <HiOutlineTrash className="text-[24px] font-medium text-[#974fd0]" />
                     <span className="text-[24px] font-medium text-[#974fd0]">
                       Delete
                     </span>
@@ -93,11 +86,11 @@ const MyTask = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-start mt-4">
+              <div className="flex flex-col items-start mt-4 ">
                 <h2 className="font-normal text-2xl md:text-[35px] text-[#292929]">
                   {task.title}
                 </h2>
-                <p className="text-[#737171] font-normal text-base md:text-[24px] leading-tight">
+                <p className="text-[16px] font-sm text-base md:text-[16px] leading-tight">
                   {task.description}
                 </p>
               </div>
@@ -109,4 +102,4 @@ const MyTask = () => {
   );
 };
 
-export default MyTask;
+export default MyTasks;
